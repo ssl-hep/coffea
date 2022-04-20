@@ -158,11 +158,6 @@ def run_coffea_processor(
             metadata=dict(meta_data, filename=str(events_url)),
         ).events()
     elif data_type == "parquet":
-        if events_url.startswith("http://") or events_url.startswith("https://"):
-            resp = requests.get(events_url, stream=False)
-            file = pyarrow.parquet.ParquetFile(pyarrow.BufferReader(resp.content))
-        else:
-            file = events_url
         events = NanoEventsFactory.from_parquet(
             file=file,
             treepath="/",
