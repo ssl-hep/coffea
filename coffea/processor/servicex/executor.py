@@ -145,6 +145,8 @@ def run_coffea_processor(
     # Since we execute remotely, explicitly include everything we need.
     from coffea.nanoevents import NanoEventsFactory
     from coffea.nanoevents.schemas.schema import auto_schema
+    import pyarrow.parquet
+    import requests
 
     if data_type == "root":
         # Use NanoEvents to build a 4-vector
@@ -156,8 +158,13 @@ def run_coffea_processor(
             metadata=dict(meta_data, filename=str(events_url)),
         ).events()
     elif data_type == "parquet":
+        if events_url.startswith("http://") or events_url.startswith("https://"):
+            resp = requests.get(sample, stream=False)
+            file = pyarrow.parquet.ParquetFile(pyarrow.BufferReader(resp.content))
+        else:
+            file = events_url
         events = NanoEventsFactory.from_parquet(
-            file=str(events_url),
+            file=file,
             treepath="/",
             schemaclass=auto_schema,
             metadata=dict(meta_data, filename=str(events_url)),
