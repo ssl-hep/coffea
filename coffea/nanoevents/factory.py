@@ -181,7 +181,7 @@ class NanoEventsFactory:
         import pyarrow
         import pyarrow.dataset as ds
         import pyarrow.parquet
-
+        import requests
         ftypes = (
             pathlib.Path,
             pyarrow.NativeFile,
