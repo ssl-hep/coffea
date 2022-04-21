@@ -195,7 +195,7 @@ class NanoEventsFactory:
             table_file = pyarrow.parquet.ParquetFile(file, **parquet_options)
         elif isinstance(file, str):
             if file.startswith("http://") or file.startswith("https://"):
-                resp = requests.get(events_url, stream=False)
+                resp = requests.get(file, stream=False)
                 table_file = pyarrow.parquet.ParquetFile(pyarrow.BufferReader(resp.content), **parquet_options)
             else:
                 fs_file = fsspec.open(file, "rb")
