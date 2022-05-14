@@ -3,6 +3,8 @@ name: CI/CD
 on:
   push:
     branches:
+      - servicex_2_5_3
+      - ci_test
       - master
       - backports-v0.6.x
     tags:
