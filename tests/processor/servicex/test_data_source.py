@@ -148,7 +148,6 @@ class MockDatset:
         self.num_calls_parquet += 1
         self.as_signed_url = as_signed_url
 
-
         for url in self.urls:
             yield url
 
